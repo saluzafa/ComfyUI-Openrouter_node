@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import time
@@ -40,10 +41,6 @@ class OpenRouterNode:
         """
         return {
             "required": {
-                "api_key": ("STRING", {
-                    "multiline": False,
-                    "default": ""
-                }),
                 "system_prompt": ("STRING", {
                     "multiline": True,
                     "default": "You are a helpful assistant."
@@ -69,6 +66,10 @@ class OpenRouterNode:
                 "chat_mode": ("BOOLEAN", {"default": False}),
             },
             "optional": {
+                "api_key": ("STRING", {
+                    "multiline": False,
+                    "default": ""
+                }),
                 "pdf_data": (PDF_DATA_TYPE,), # Use '*' and check structure in generate_response
                 "user_message_input": ("STRING", {"forceInput": True}),
             }
@@ -169,6 +170,9 @@ class OpenRouterNode:
         """
         # Create empty placeholder image
         placeholder_image = torch.zeros((1, 1, 1, 3), dtype=torch.float32)
+        if not api_key
+            api_key = os.environ.get("OPENROUTER_API_KEY", None)
+        
         if not api_key:
              return ("Error: API Key not provided.", placeholder_image, "Stats N/A", "Credits N/A")
 
@@ -638,4 +642,5 @@ NODE_CLASS_MAPPINGS = {
 # Node display name mappings
 NODE_DISPLAY_NAME_MAPPINGS = {
     "OpenRouterNode": "OpenRouter LLM Node (Text/Multi-Image/PDF/Chat)" # Updated name
+
 }
