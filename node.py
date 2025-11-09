@@ -170,7 +170,7 @@ class OpenRouterNode:
         """
         # Create empty placeholder image
         placeholder_image = torch.zeros((1, 1, 1, 3), dtype=torch.float32)
-        if not api_key
+        if not api_key:
             api_key = os.environ.get("OPENROUTER_API_KEY", None)
         
         if not api_key:
