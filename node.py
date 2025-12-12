@@ -206,7 +206,7 @@ class OpenRouterNode:
         else:
             # Non-chat mode: Build the messages array, starting with a system prompt.
             messages = []
-            if len(system_prompt) > 0
+            if len(system_prompt) > 0:
                 messages.append({"role": "system", "content": system_prompt})
 
         # --- Build the user message content ---
@@ -646,5 +646,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "OpenRouterNode": "OpenRouter LLM Node (Text/Multi-Image/PDF/Chat)" # Updated name
 
 }
+
 
 
