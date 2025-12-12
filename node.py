@@ -312,8 +312,7 @@ class OpenRouterNode:
             "model": modified_model,
             "messages": messages,
             "temperature": validated_temp,
-            "reasoning": { "effort": reasoning_effort },
-            "tool_choice": "none"
+            "reasoning": { "effort": reasoning_effort }
             # Omitting max_tokens lets the model decide (usually preferred)
         }
         
@@ -647,6 +646,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "OpenRouterNode": "OpenRouter LLM Node (Text/Multi-Image/PDF/Chat)" # Updated name
 
 }
+
 
 
 
