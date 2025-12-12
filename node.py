@@ -43,22 +43,23 @@ class OpenRouterNode:
             "required": {
                 "system_prompt": ("STRING", {
                     "multiline": True,
-                    "default": "You are a helpful assistant."
+                    "default": ""
                 }),
                 "user_message_box": ("STRING", {
                     "multiline": True,
-                    "default": "Hello, how are you?"
+                    "default": ""
                 }),
                 "model": ("STRING", {"default": "x-ai/grok-4.1-fast"}),
                 "web_search": ("BOOLEAN", {"default": False}),
                 "cheapest": ("BOOLEAN", {"default": True}),
                 "fastest": ("BOOLEAN", {"default": False}),
                 "image_generation": ("BOOLEAN", {"default": False}),
+                "reasoning_effort": (["none", "minimal", "low", "medium", "high"], {"default": "none"}),
                 "temperature": ("FLOAT", {
                     "default": 1.0,
                     "min": 0.0,
                     "max": 2.0,
-                    "step": 0.1,
+                    "step": 0.01,
                     "display": "slider",
                     "round": 1,
                 }),
@@ -157,7 +158,7 @@ class OpenRouterNode:
 
     def generate_response(self, api_key, system_prompt, user_message_box, model,
                          web_search, cheapest, fastest, temperature, pdf_engine, chat_mode,
-                         image_generation=False, pdf_data=None, user_message_input=None, **kwargs):
+                         image_generation=False, pdf_data=None, user_message_input=None, reasoning_effort="none", **kwargs):
         """
         Sends a completion request to the OpenRouter chat completion endpoint.
         Handles text, optional image, and optional PDF inputs.
@@ -204,9 +205,9 @@ class OpenRouterNode:
                 messages[0]["content"] = system_prompt
         else:
             # Non-chat mode: Build the messages array, starting with a system prompt.
-            messages = [
-                {"role": "system", "content": system_prompt},
-            ]
+            messages = []
+            if len(system_prompt) > 0
+                messages.append({"role": "system", "content": system_prompt})
 
         # --- Build the user message content ---
         user_content_blocks = []
@@ -310,7 +311,8 @@ class OpenRouterNode:
         data = {
             "model": modified_model,
             "messages": messages,
-            "temperature": validated_temp
+            "temperature": validated_temp,
+            "reasoning": { "effort": reasoning_effort } 
             # Omitting max_tokens lets the model decide (usually preferred)
         }
         
@@ -644,4 +646,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "OpenRouterNode": "OpenRouter LLM Node (Text/Multi-Image/PDF/Chat)" # Updated name
 
 }
+
 
