@@ -49,7 +49,7 @@ class OpenRouterNode:
                     "multiline": True,
                     "default": "Hello, how are you?"
                 }),
-                "model": (cls.fetch_openrouter_models(),),
+                "model": ("STRING", {"default": "x-ai/grok-4.1-fast"}),
                 "web_search": ("BOOLEAN", {"default": False}),
                 "cheapest": ("BOOLEAN", {"default": True}),
                 "fastest": ("BOOLEAN", {"default": False}),
@@ -644,3 +644,4 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "OpenRouterNode": "OpenRouter LLM Node (Text/Multi-Image/PDF/Chat)" # Updated name
 
 }
+
